@@ -3,10 +3,7 @@ class Terminal {
     this.inputElement = inputElement; // input of terminal
     this.outputElement = outputElement; // output of terminal
     inputElement.addEventListener("keydown", this.handleInput);
-    this.commands = {
-      help: ["Available commands are:", "clear", "help"],
-      clear: "",
-    };
+    this.commands = terminalCommands;
     this.history = []; // for arrow up and down
     this.historyIndex = 0;
     inputElement.addEventListener("focusout", () => inputElement.focus()); // always keep input in focus
@@ -34,19 +31,13 @@ class Terminal {
     }
   };
 
-  handleCommand = (command) => {
-    command = command.toLowerCase().trim(); // handle lowercase
-    this.displayPreviousRunCommand(command);
+  handleCommand = (fullCommand) => {
+    const command = fullCommand.split(" ")[0].toLowerCase().trim();
+    this.displayPreviousRunCommand(fullCommand);
 
-    if (command.toLowerCase() === "clear") {
-      this.outputElement.innerHTML = "";
-    } else if (this.commands[command.toLowerCase()]) {
-      // valid command
-      this.commands[command.toLowerCase()].forEach((outputLine) => {
-        const outputDiv = document.createElement("div");
-        outputDiv.innerText = outputLine;
-        this.outputElement.appendChild(outputDiv);
-      });
+    if (this.commands[command.toLowerCase()]) {
+      // valid command, execute the function
+      this.commands[command.toLowerCase()](fullCommand, this.outputElement);
     } else if (command.length > 0) {
       const outputDiv = document.createElement("div");
       outputDiv.innerText = command + " is not a valid command";
@@ -59,7 +50,7 @@ class Terminal {
     const suggestions = [];
     const commandLower = command.toLowerCase();
     for (const key in this.commands) {
-      if (key.startsWith(commandLower)) {
+      if (key.toLowerCase().startsWith(commandLower)) {
         suggestions.push(key);
       }
     }
