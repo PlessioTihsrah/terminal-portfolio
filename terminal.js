@@ -40,7 +40,8 @@ class Terminal {
       this.commands[command.toLowerCase()](fullCommand, this.outputElement);
     } else if (command.length > 0) {
       const outputDiv = document.createElement("div");
-      outputDiv.innerText = command + " is not a valid command";
+      outputDiv.innerText =
+        command + " is not a valid command. Type help for more info.";
       this.outputElement.appendChild(outputDiv);
     }
     this.inputElement.scrollIntoView();
