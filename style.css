@@ -1,0 +1,45 @@
+body {
+  background-color: #011627;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.terminal {
+  width: 75vw;
+  height: 75vh;
+  color: white;
+  border-radius: 20px;
+  background: #011627;
+  box-shadow: 5px 5px 18px #152938, -5px -5px 18px #152938;
+  padding: 30px;
+  font-family: "Inconsolata", monospace;
+  letter-spacing: 1.5px;
+  overflow-y: scroll;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
+}
+
+.terminal::-webkit-scrollbar {
+  display: none;
+}
+
+.header {
+  height: 50px;
+}
+
+.input input {
+  background-color: rgba(0, 0, 0, 0);
+  caret-color: white;
+  color: white;
+  border-color: transparent;
+}
+
+.input input:focus {
+  outline: none;
+}
+
+#output div {
+  margin-bottom: 5px;
+}
