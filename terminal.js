@@ -29,19 +29,14 @@ class Terminal {
         break;
       case 9: // tab pressed
         e.preventDefault();
-        const suggestions = this.getTabSuggestions(value);
-        if (suggestions.length > 0) {
-          e.target.value = suggestions[0];
-        }
+        this.getTabSuggestions(value);
         break;
     }
   };
 
   handleCommand = (command) => {
     command = command.toLowerCase().trim(); // handle lowercase
-    const divEl = document.createElement("div"); // previous command on output
-    divEl.innerText = "[hp@harshitpal] $ " + command;
-    this.outputElement.appendChild(divEl);
+    this.displayPreviousRunCommand(command);
 
     if (command.toLowerCase() === "clear") {
       this.outputElement.innerHTML = "";
@@ -68,8 +63,26 @@ class Terminal {
         suggestions.push(key);
       }
     }
-    return suggestions;
+    if (suggestions.length == 1) {
+      this.inputElement.value = suggestions[0];
+    } else if (suggestions.length > 0) {
+      this.displayPreviousRunCommand(command);
+      const suggestionDiv = document.createElement("div");
+      suggestionDiv.className = "suggestions";
+      suggestions.forEach((suggestion) => {
+        const suggestionSpan = document.createElement("span");
+        suggestionSpan.innerText = suggestion;
+        suggestionDiv.appendChild(suggestionSpan);
+      });
+      this.outputElement.appendChild(suggestionDiv);
+    }
   }
+
+  displayPreviousRunCommand = (command) => {
+    const divEl = document.createElement("div"); // previous command on output
+    divEl.innerText = "[hp@harshitpal] $ " + command;
+    this.outputElement.appendChild(divEl);
+  };
 
   moveHistoryUp = () => {
     if (this.historyIndex < this.history.length) {

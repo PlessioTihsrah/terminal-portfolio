@@ -43,3 +43,7 @@ body {
 #output div {
   margin-bottom: 5px;
 }
+
+.suggestions span {
+  margin-right: 10px;
+}
