@@ -8,8 +8,8 @@ body {
 }
 
 .terminal {
-  width: 75vw;
-  height: 75vh;
+  width: 75%;
+  height: 75%;
   border-radius: 20px;
   /* //background: #011627; */
   box-shadow: 5px 5px 18px #333, -5px -5px 18px #333;
@@ -47,4 +47,10 @@ body {
 
 .suggestions span {
   margin-right: 10px;
+}
+
+@media all and (orientation: portrait) {
+  body {
+    height: 85vh;
+  }
 }

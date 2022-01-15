@@ -8,8 +8,42 @@ class Terminal {
     this.historyIndex = 0;
     inputElement.addEventListener("focusout", () => inputElement.focus()); // always keep input in focus
     inputElement.focus(); // focus input by default
+
+    // for touch events
+    if (this.isTouchDevice()) {
+      this.touchEvents = new TouchEvents(inputElement, this.swipeHandler);
+      document.querySelector("#usage").innerHTML =
+        "Swipe <b>up/down</b> to move between previous commands. Swipe <b>right</b> for autocompletion, swipe <b>left</b> to clear current input.";
+    } else {
+      document.querySelector("#usage").innerHTML =
+        "Use <b>up/down arrow</b> to move between previous commands. Use <b>Tab</b> for autocompletion.";
+    }
   }
 
+  isTouchDevice() {
+    return (
+      "ontouchstart" in window ||
+      navigator.maxTouchPoints > 0 ||
+      navigator.msMaxTouchPoints > 0
+    );
+  }
+
+  swipeHandler = (direction) => {
+    switch (direction) {
+      case "left":
+        this.inputElement.value = "";
+        break;
+      case "right":
+        this.getTabSuggestions(this.inputElement.value);
+        break;
+      case "up":
+        this.inputElement.value = this.moveHistoryUp();
+        break;
+      case "down":
+        this.inputElement.value = this.moveHistoryDown();
+        break;
+    }
+  };
   handleInput = (e) => {
     const value = e.target.value;
     switch (e.keyCode) {

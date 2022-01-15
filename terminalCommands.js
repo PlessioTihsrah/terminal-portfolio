@@ -25,7 +25,7 @@ const terminalCommands = {
         [
           "Changes background and font color",
           "Usage: change-color <hex value of new background color> <hex value of new font color>",
-          "Example: changebackground #ffffff #000000",
+          "Example: change-color #ffffff #000000",
         ],
         outputElement
       );
